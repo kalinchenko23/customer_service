@@ -32,10 +32,15 @@
   <body>
 
   <div class="site-wrap">
+    {% if messages %}
+    {%for message in messages%}
+        <div class="alert alert-{{message.tags}}">
+          {{message}}
+        </div>
 
-
-
- <div class="site-blocks-cover overlay" style="background-image: url({%static 'images/cover.jpg'%});" data-aos="fade" data-stellar-background-ratio="0.5">
+    {%endfor%}
+    {% endif %}
+    <div class="site-blocks-cover overlay" style="background-image: url({%static 'images/cover.jpg'%});" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-10 text-center" data-aos="fade">
@@ -44,15 +49,15 @@
               <form method="POST">
                 {% csrf_token %}
                 <fieldset class="form-group">
-                  <legend class="border-bottom mb-4">Register</legend>
+                  <legend class="border-bottom mb-4">Log in</legend>
                   {{form|crispy}}
                 </fieldset>
                 <div class="form-group">
-                  <button class="btn btn-outline-info" type="submit">Sign up</button>
+                  <button class="btn btn-outline-info" type="submit">Log in</button>
               </div>
             </form>
             <div class="border-top pt-3">
-            <small class="text-muted">Already have an account? <a class="ml-2" href="/login">Sign in</a></small>
+            <small class="text-muted">Need an account<a class="ml-2" href="/register">Sign up</a></small>
 
             </div>
           </div>
@@ -80,22 +85,4 @@
 
   <script>
       document.addEventListener('DOMContentLoaded', function() {
-                var mediaElements = document.querySelectorAll('video, audio'), total = mediaElements.length;
-
-                for (var i = 0; i < total; i++) {
-                    new MediaElementPlayer(mediaElements[i], {
-                        pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
-                        shimScriptAccess: 'always',
-                        success: function () {
-                            var target = document.body.querySelectorAll('.player'), targetTotal = target.length;
-                            for (var j = 0; j < targetTotal; j++) {
-                                target[j].style.visibility = 'visible';
-                            }
-                  }
-                });
-                }
-            });
-    </script>
-
-  </body>
-</html>
+                var mediaElements = document.querySelectorAll('video, audio'

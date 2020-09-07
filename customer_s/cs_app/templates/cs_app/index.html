@@ -61,11 +61,14 @@
                       <li class="active">
                         <a href="index.html">Home</a>
                       </li>
+                      <li class="active">
+                        <a href="/profile">My Profile</a>
+                      </li>
                       <li><a href="speakers.html">Speakers</a></li>
                       <li><a href="venue.html">Venue</a></li>
                       <li><a href="sponsors.html">Sponsors</a></li>
                       <li><a href="about.html">About</a></li>
-                      <li><a href="contact.html">Contact</a></li>
+                      <li><a href="/logout">Log out</a></li>
                     </ul>
                   </div>
                 </nav>
@@ -75,16 +78,6 @@
         </div>
       </div>
     </div>
-
-
-    {% if messages %}
-    {%for message in messages%}
-        <div class="alert alert-{{message.tags}}">
-          {{message}}
-        </div>
-
-    {%endfor%}
-    {% endif %}
 
     <div class="site-blocks-cover overlay" style="background-image: url({%static 'images/hero_1.jpg'%});" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
