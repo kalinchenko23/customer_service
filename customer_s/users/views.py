@@ -6,8 +6,9 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required(login_url='/login')
 def profile(request):
-    return render(request,'users/profile.html')
-@login_required(login_url='/login')
+    return render(request,'users/profile2.html')
+
+
 def register(request):
     if request.method=="POST":
         form=UserRegisterForm(request.POST)
