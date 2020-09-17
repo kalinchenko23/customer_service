@@ -2,9 +2,17 @@ from django.shortcuts import render ,redirect
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, PdfForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile
-
+from .models import Profile, Document
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
+from django.urls import reverse
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 @login_required(login_url='/login')
 
 def profile(request):
@@ -29,25 +37,39 @@ def profile(request):
              }
     return render(request,'users/profile.html',context)
 
+class PdfListView(LoginRequiredMixin, ListView):
+    model = Document
+    template_name='users/document_form.html'
 
-def pdf_files(request):
-    if request.method=="POST":
-        pdf_form=PdfForm(request.POST,request.FILES,instance=request.user.profile)
-        if pdf_form.is_valid():
-            pdf_form.save()
-            messages.success(request, f"Your file has been updated!")
-            return redirect("/pdf_files")
-    else:
-        pdf_form=PdfForm(instance=request.user.profile)
-        files = Profile.objects.all()
 
-    context={
-        "pdf_form": pdf_form,
-        "files":files
-        }
+class PdfListView(LoginRequiredMixin, ListView):
+    model = Document
+    template_name='users/document_form.html'
+    context_object_name= 'document'
+    def get_queryset(self):
+        queryset = Document.objects.all()
+        user = self.request.user
 
-    return render(request,'users/pdf_list.html',context)
 
+        if not user.is_superuser:
+            queryset = queryset.filter(
+                created_by=user
+            )
+
+        return queryset
+
+
+class PdfCreateView(LoginRequiredMixin, CreateView):
+    model = Document
+    fields = ['title', 'pdf']
+    template_name='users/profile.html'
+
+    def get_success_url(self):
+        return reverse('pdf-list')
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 def register(request):

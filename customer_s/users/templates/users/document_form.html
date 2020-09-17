@@ -18,24 +18,15 @@
               <div class="row align-items-center">
                 <div class="col-8">
                   <a class="h4 mb-0 text-black text-uppercase d-none d-lg-inline-block" href="/profile" >Your PDF Files</a>
+                  {% for i in document %}
+                  <p>{{i.pdf.url}}</p>
+                  {% endfor%}
                 </div>
 
               </div>
             </div>
             <div class="card-body">
 
-                        <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <fieldset class="form-group">
-                          <legend class="border-bottom mb-4">Upload File</legend>
-                          {{ pdf_form|crispy }}
-                        </fieldset>
-                        <div class="form-group">
-                          <button class="btn btn-primary btn-sm" type="submit">Upload</button>
-                        </div>
 
-                          <p>{{user.profile.pdf.url}}</p>
-
-                      </form>
                 </div>
                 <hr class="my-4">
