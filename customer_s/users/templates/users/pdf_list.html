@@ -1,0 +1,47 @@
+<!doctype html>
+{%load static%}
+{% load crispy_forms_tags %}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link rel="stylesheet" href="{%static 'css/profile.css'%}">
+<body>
+    {% if messages %}
+    {%for message in messages%}
+        <div class="alert alert-{{message.tags}}">
+          {{message}}
+        </div>
+
+    {%endfor%}
+    {% endif %}
+    <div class="col-xl-8 order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Download</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in document %}
+                        <tr>
+
+                          <td>{{ i.title }}</td>
+                          <td>
+                            <a href="{{ i.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+                              Download PDF
+                            </a>
+                          </td>
+                          <td>
+                            <form method="post" action="{% url 'pdf_deleate' i.pk %}">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-danger btn-sm" >Delete</button >
+                            </form>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>

@@ -37,14 +37,12 @@ def profile(request):
              }
     return render(request,'users/profile.html',context)
 
-class PdfListView(LoginRequiredMixin, ListView):
-    model = Document
-    template_name='users/document_form.html'
+
 
 
 class PdfListView(LoginRequiredMixin, ListView):
     model = Document
-    template_name='users/document_form.html'
+    template_name='users/pdf_list.html'
     context_object_name= 'document'
     def get_queryset(self):
         queryset = Document.objects.all()
@@ -70,6 +68,40 @@ class PdfCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
+
+class PdfDeleateView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Document
+    success_url = 'pdf_files/'
+
+    def test_func(self):
+        document = self.get_object()
+        if self.request.user == document.created_by:
+            return True
+        return False
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Document
+    fields = ['title', 'pdf']
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+
+
+
+def deleate_pdf(request,pk):
+    if request.method=="POST":
+        pdf=Document.objects.get(pk=pk)
+        pdf.delete()
+    return redirect("pdf-list")
 
 
 def register(request):

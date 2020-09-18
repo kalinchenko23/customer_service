@@ -31,3 +31,7 @@ class Document(models.Model):
 
     def get_absolute_url(self):
         return reverse('profile', kwargs={'pk': self.pk})
+
+    def delete(self, *args, **kwargs):
+        self.pdf.delete()
+        super().delete(*args, **kwargs)
