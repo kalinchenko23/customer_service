@@ -13,8 +13,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-@login_required(login_url='/login')
 
+@login_required(login_url='/login')
 def profile(request):
     if request.method=="POST":
         u_form=UserUpdateForm(request.POST,instance=request.user)
@@ -49,8 +49,8 @@ class PdfListView(LoginRequiredMixin, ListView):
         user = self.request.user
 
 
-        if not user.is_superuser:
-            queryset = queryset.filter(
+
+        queryset = queryset.filter(
                 created_by=user
             )
 
@@ -69,9 +69,25 @@ class PdfCreateView(LoginRequiredMixin, CreateView):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
-class PdfDeleateView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+def deleate_pdf(request,pk):
+    if request.method=="POST":
+        pdf=Document.objects.get(pk=pk)
+        pdf.delete()
+    return redirect("pdf-list")
+
+
+class PdfUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Document
-    success_url = 'pdf_files/'
+    fields = ['title', 'pdf']
+    template_name="users/update_pdf.html"
+
+    def deleate_pdf(request,pk):
+        pdf=Document.objects.get(pk=pk)
+        pdf.delete()
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
     def test_func(self):
         document = self.get_object()
@@ -79,29 +95,10 @@ class PdfDeleateView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Document
-    fields = ['title', 'pdf']
-
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
-
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
+    def get_success_url(self):
+        return reverse('pdf-list')
 
 
-
-
-def deleate_pdf(request,pk):
-    if request.method=="POST":
-        pdf=Document.objects.get(pk=pk)
-        pdf.delete()
-    return redirect("pdf-list")
 
 
 def register(request):
@@ -120,8 +117,8 @@ def update_profile(request):
     if request.method=="POST":
         u_form=UserUpdateForm(request.POST,instance=request.user)
         p_form=ProfileUpdateForm(request.POST,request.FILES ,instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
+        if p_form.is_valid():
+
             p_form.save()
             messages.success(request, f"Your account has been updated!")
         return redirect("/profile")

@@ -19,13 +19,14 @@ from django.urls import path,include
 from users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
-from users.views import PdfCreateView,PdfListView,PdfDeleateView
+from users.views import PdfCreateView,PdfListView,PdfUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('profile/update_profile/', user_views.update_profile),
     path('pdf_files/', PdfListView.as_view(), name='pdf-list'),
-    path('pdf_files/<int:pk>/pdf_files/', user_views.deleate_pdf, name='pdf_deleate'),
+    path('pdf_files/<int:pk>/', user_views.deleate_pdf, name='pdf_deleate'),
+    path('pdf_files/<int:pk>/update', PdfUpdateView.as_view(), name='pdf_update'),
     path('register/',user_views.register, name="register"),
     path('login/',auth_views.LoginView.as_view(template_name='users/login.html'), name="login"),
     path('profile/',PdfCreateView.as_view(), name='pdf-create'),
