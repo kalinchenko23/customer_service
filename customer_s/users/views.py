@@ -1,11 +1,14 @@
 from django.shortcuts import render ,redirect
 from django.contrib import messages
+import os
+from customer_s import settings
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, PdfForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Document
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
 from django.urls import reverse
+from django.core.mail import EmailMessage
 from django.views.generic import (
     ListView,
     DetailView,
@@ -69,21 +72,13 @@ class PdfCreateView(LoginRequiredMixin, CreateView):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
-def deleate_pdf(request,pk):
-    if request.method=="POST":
-        pdf=Document.objects.get(pk=pk)
-        pdf.delete()
-    return redirect("pdf-list")
+
 
 
 class PdfUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Document
     fields = ['title', 'pdf']
     template_name="users/update_pdf.html"
-
-    def deleate_pdf(request,pk):
-        pdf=Document.objects.get(pk=pk)
-        pdf.delete()
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -97,6 +92,38 @@ class PdfUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('pdf-list')
+
+
+
+
+
+
+
+def deleate_pdf(request,pk):
+    if request.method=="POST":
+        pdf=Document.objects.get(pk=pk)
+        pdf.delete()
+    return redirect("pdf-list")
+
+# customer_s/media/profile_pdf/Resume_.pdf
+
+
+
+
+
+def send_email_pdf(request,pk):
+    if request.method=="POST":
+        pdf=Document.objects.get(pk=pk).pdf
+        email = EmailMessage(
+                'Document',
+                'Please see a document attached.',
+                'kalinchenko.max@gmail.com',
+                ['kalinchenko.97@mail.ru'])
+        email.attach_file('/Users/maximkalinchenko/Desktop/customer_service/customer_s'+pdf.url)
+        email.send()
+        return redirect("pdf-list")
+    return render(request,"users/pdf_list.html")
+
 
 
 
@@ -130,3 +157,5 @@ def update_profile(request):
              "p_form":p_form,
              }
     return render(request,'users/update_profile.html',context)
+
+

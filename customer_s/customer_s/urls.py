@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profile/update_profile/', user_views.update_profile),
     path('pdf_files/', PdfListView.as_view(), name='pdf-list'),
+    path('pdf_files/<int:pk>/login', user_views.send_email_pdf, name='pdf_email'),
     path('pdf_files/<int:pk>/', user_views.deleate_pdf, name='pdf_deleate'),
     path('pdf_files/<int:pk>/update', PdfUpdateView.as_view(), name='pdf_update'),
     path('register/',user_views.register, name="register"),

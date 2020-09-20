@@ -51,14 +51,14 @@ def delete_file_on_change_extension(sender, instance, **kwargs):
             if old_pdf and old_pdf.url != new_pdf.url:
                 old_pdf.delete(save=False)
 
-@receiver(models.signals.pre_save, sender=Profile)
-def delete_file_on_change_extension(sender, instance, **kwargs):
-    if instance.pk:
-        try:
-            old_img = Profile.objects.get(pk=instance.pk).image
-        except Profile.DoesNotExist:
-            return
-        else:
-            new_img = instance.image
-            if old_img and old_img.url != new_img.url:
-                old_img.delete(save=False)
+# @receiver(models.signals.pre_save, sender=Profile)
+# def delete_file_on_change_extension(sender, instance, **kwargs):
+#     if instance.pk:
+#         try:
+#             old_img = Profile.objects.get(pk=instance.pk).image
+#         except Profile.DoesNotExist:
+#             return
+#         else:
+#             new_img = instance.image
+#             if old_img and old_img.url != new_img.url:
+#                 old_img.delete(save=False)

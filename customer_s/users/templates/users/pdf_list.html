@@ -24,6 +24,7 @@
                         <th>Download</th>
                         <th>Delete</th>
                         <th>Update</th>
+                        <th>Send Email</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -41,14 +42,21 @@
                               {% csrf_token %}
                             <button type="submit" class="btn btn-danger btn-sm" >Delete</button >
                             </form>
-                          </td>
+                        </tr>
+
 
                           <td>
                             <form method="post" action="{% url 'pdf_update' i.pk %}">
                               {% csrf_token %}
                             <button type="submit" class="btn btn-danger btn-sm" >Update</button >
                             </form>
-                        </tr>
+                          </tr>
+                          <td>
+                            <form method="post" action="{% url 'pdf_email' i.pk %}">
+                              {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" >Send Email </button >
+                            </form>
+                      </tr>
                       {% endfor %}
                     </tbody>
                   </table>
