@@ -24,6 +24,7 @@ from users.views import PdfCreateView,PdfListView,PdfUpdateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('profile/update_profile/', user_views.update_profile),
+    path('profile/send_aer/', user_views.aer),
     path('pdf_files/', PdfListView.as_view(), name='pdf-list'),
     path('pdf_files/<int:pk>/login', user_views.send_email_pdf, name='pdf_email'),
     path('pdf_files/<int:pk>/', user_views.deleate_pdf, name='pdf_deleate'),
