@@ -160,7 +160,10 @@ code {
 
 img {
   vertical-align: middle;
-  border-style: none;
+  border-style: solid;
+  max-height: 350px;
+  max-width: 350px;
+
 }
 
 caption {
@@ -1102,8 +1105,10 @@ button.bg-default:focus {
 }
 
 .bg-white {
-  background-color: #fff !important;
+  background-color: #fff ;
 }
+
+
 
 a.bg-white:hover,
 a.bg-white:focus,

@@ -2,6 +2,8 @@
 <!doctype html>
 {%load static%}
 {% load crispy_forms_tags %}
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link rel="stylesheet" href="{%static 'css/profile.css'%}">
 <body>
@@ -18,7 +20,7 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a href="/" class="btn btn-info" style="color: green">Get back to the Home Page</a>
+
         <!-- Form -->
 
         <!-- User -->
@@ -70,7 +72,9 @@
             <h1 class="display-2 text-white">Hello {{user.profile.rank}} {{user.last_name}}</h1>
             <p class="text-white mt-0 mb-5">This is your profile page. You can upload pdf files, view them and send an email to your NCO. Also you can fast and easy sent an AER.</p>
             <a href="update_profile/" class="btn btn-info">Edit profile</a>
+            <a href="pdf_create/" class="btn btn-info" >Upload File</a>
             <a href="send_aer/" class="btn btn-info">Send an AER</a>
+            <a href="/" class="btn btn-info" >Home Page</a>
           </div>
         </div>
       </div>
@@ -105,23 +109,24 @@
                   {{user.username}}<span class="font-weight-light"></span>
                 </h3>
                 <div class="h5 font-weight-300">
+
                   <i class="ni location_pin mr-2"></i>{{user.email}}
+
                 </div>
                 <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
+                  <i class="ni business_briefcase-24 mr-2"></i>230th FMSU Customer Service
                 </div>
                 <div>
                   <i class="ni education_hat mr-2"></i>
 
 
                 </div>
-                <hr class="my-4">
-                <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
-                <a href="#">Show more</a>
+
               </div>
             </div>
           </div>
         </div>
+
         <div class="col-xl-8 order-xl-1">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
@@ -130,76 +135,65 @@
                   <h3 class="mb-0">My account</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="/pdf_files" class="btn btn-sm btn-primary">My Files</a>
+                  <a href="/acft_create" class="btn btn-sm btn-primary">Update ACFT</a>
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <fieldset class="form-group">
-                          <legend class="border-bottom mb-4">Upload File</legend>
-                          {{ form |crispy }}
-                        </fieldset>
-                        <div class="form-group">
-                          <button class="btn btn-primary btn-sm" type="submit">Upload</button>
-                        </div>
+              {% block data %}
 
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Download</th>
+                        <th>Delete</th>
+                        <th>Update</th>
+                        <th>Send Email</th>
 
-                      </form>
+                      </tr>
+                    </thead>
+                    <tbody>
 
+                      {% for i in document %}
+                        <tr>
 
-                    </div>
+                          <td >{{ i.title }}</td>
+                          <td>
+                            <a href="{{ i.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+                              Download PDF
+                            </a>
+                          </td>
+                          <td>
+                            <form method="post" action="{% url 'pdf_deleate' i.pk %}">
+                              {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" >Delete</button >
+                            </form>
+
+                          <td>
+                            <form method="post" action="{% url 'pdf_update' i.pk %}">
+                              {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Update</button >
+                            </form>
+
+                          <td>
+                            <form method="post" action="{% url 'pdf_email' i.pk %}">
+                              {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" >Send Email </button >
+                            </form>
+                      </tr>
+                      {% endfor %}
+
+                    </tbody>
+                  </table>
 
                 <hr class="my-4">
-                <!-- Address -->
-                <h6 class="heading-small text-muted mb-4">Contact information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="input-address">Address</label>
-                        <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="input-city">City</label>
-                        <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="New York">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="input-country">Country</label>
-                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="United States">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country">Postal code</label>
-                        <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <hr class="my-4">
+                {% endblock %}
+
+                <div id="myChart"></div>
+
                 <!-- Description -->
-                <h6 class="heading-small text-muted mb-4">About me</h6>
-                <div class="pl-lg-4">
-                  <div class="form-group focused">
-                    <label>About Me</label>
-                    <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
   <footer class="footer">
     <div class="row align-items-center justify-content-xl-between">
       <div class="col-xl-6 m-auto text-center">
@@ -207,4 +201,39 @@
       </div>
     </div>
   </footer>
+
+<script>
+
+  var chartData={
+    "type":"bar",
+    "scale-x": {
+          "values": [
+            "deadlift",
+            "ball",
+            "push ups",
+            "SDC",
+            "leg tucks",
+            "run"
+          ]},
+          "series":[
+          {
+            "values":[
+              250,
+              20,
+              40,
+              5,
+              20,
+              40
+              ]}
+              ]
+        }
+
+
+    zingchart.render({
+      id: 'myChart',
+      data: chartData,
+      });
+</script>
 </body>
+
+

@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.dispatch import receiver
 
 
+
 # Create your models here.
 
 class Profile(models.Model):
@@ -28,7 +29,7 @@ class Profile(models.Model):
 class Document(models.Model):
     created_by=models.ForeignKey(User,null=True,on_delete= models.CASCADE)
     title =models.CharField(max_length=100)
-    pdf = models.FileField(default='POV_Inspection_checklist.pdf', upload_to='profile_pdf')
+    pdf = models.FileField(blank=True, upload_to='profile_pdf')
     def __str__(self):
         return f'{self.created_by} Document'
 
@@ -40,17 +41,23 @@ class Document(models.Model):
         super().delete(*args, **kwargs)
 
 
-@receiver(models.signals.pre_save, sender=Document)
-def delete_file_on_change_extension(sender, instance, **kwargs):
-    if instance.pk:
-        try:
-            old_pdf = Document.objects.get(pk=instance.pk).pdf
-        except Document.DoesNotExist:
-            return
-        else:
-            new_pdf = instance.pdf
-            if old_pdf and old_pdf.url != new_pdf.url:
-                old_pdf.delete(save=False)
+class ACFT(models.Model):
+    pushaps_choices=[tuple([x,x]) for x in range(1,61)]
+    dead_lift_choices=[tuple([x,x]) for x in range(140,341,10)]
+    leg_tucks_choices=[tuple([x,x]) for x in range(1,21)]
+
+
+    owner=models.ForeignKey(User, null=True,on_delete= models.CASCADE)
+    pushups=models.IntegerField(blank=True,choices=pushaps_choices, max_length=2)
+    ball=models.CharField(blank=True, max_length=4)
+    sprint_drag=models.CharField(blank=True, max_length=5)
+    leg_tucks=models.IntegerField(blank=True,choices=leg_tucks_choices, max_length=2)
+    run=models.CharField(blank=True, max_length=5)
+    dead_lift=models.IntegerField(blank=True,choices=dead_lift_choices, max_length=3)
+    def __str__(self):
+        return f'{self.owner} ACFT'
+
+
 
 # @receiver(models.signals.pre_save, sender=Profile)
 # def delete_file_on_change_extension(sender, instance, **kwargs):

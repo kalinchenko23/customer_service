@@ -20,18 +20,24 @@ from users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
 from users.views import PdfCreateView,PdfListView,PdfUpdateView
+from django.urls import re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('profile/update_profile/', user_views.update_profile),
-    path('profile/send_aer/', user_views.aer),
-    path('pdf_files/', PdfListView.as_view(), name='pdf-list'),
-    path('pdf_files/<int:pk>/login', user_views.send_email_pdf, name='pdf_email'),
-    path('pdf_files/<int:pk>/', user_views.deleate_pdf, name='pdf_deleate'),
-    path('pdf_files/<int:pk>/update', PdfUpdateView.as_view(), name='pdf_update'),
+    re_path(r'update_profile/$', user_views.update_profile),
+    re_path(r'aer/$', user_views.aer),
+    re_path(r'pdf_create/$',PdfCreateView.as_view(), name='pdf-create'),
+    re_path(r'acft_create/$',user_views.create_acft, name='acft-create'),
+
+    re_path(r'profile/$', PdfListView.as_view(), name='pdf-list'),
+
+    path('resultsdata/',user_views.resultsACFT, name="acft_results"),
+
+    path('profile/<int:pk>/send_email', user_views.send_email_pdf, name='pdf_email'),
+    path('profile/<int:pk>/', user_views.deleate_pdf, name='pdf_deleate'),
+    path('profile/<int:pk>/update', PdfUpdateView.as_view(), name='pdf_update'),
     path('register/',user_views.register, name="register"),
     path('login/',auth_views.LoginView.as_view(template_name='users/login.html'), name="login"),
-    path('profile/',PdfCreateView.as_view(), name='pdf-create'),
     path('logout/',auth_views.LogoutView.as_view(template_name='users/logout.html'), name="logout"),
     path('',include('cs_app.urls')),
 

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, Document
+from .models import Profile, Document, ACFT
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -20,7 +20,10 @@ class RankForm(forms.ModelForm):
 
 
 
-class UserUpdateForm(UserCreationForm):
+
+
+
+class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
     class Meta:
@@ -54,3 +57,37 @@ class AerForm(forms.Form):
     q12 = forms.CharField(required=False,label=False,max_length=200,widget=forms.TextInput(attrs={'class': 'form-control',"placeholder":"improvement 5. Leave blank if none."}))
     q13 = forms.CharField(required=False,label="What are the alibis?",max_length=200,widget=forms.TextInput(attrs={'class': 'form-control',"placeholder":"alibi 1. Leave blank if none."}))
     q14 = forms.CharField(required=False,label=False,max_length=200,widget=forms.TextInput(attrs={'class': 'form-control',"placeholder":"alibi 2. Leave blank if none."}))
+
+
+class ACFTForm(forms.ModelForm):
+    class Meta:
+        model=ACFT
+        fields=['pushups', 'ball','sprint_drag','leg_tucks','run','dead_lift']
+        widgets = {
+            'ball': forms.TextInput(attrs={'placeholder': 'format 0,0'}),
+            'sprint_drag': forms.TextInput(attrs={'placeholder': 'format 00:00'}),
+            'run': forms.TextInput(attrs={'placeholder': 'format 00:00'}),
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

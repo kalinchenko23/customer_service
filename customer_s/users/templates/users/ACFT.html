@@ -18,12 +18,13 @@
               <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <fieldset class="form-group">
-                          <legend class="border-bottom mb-4">Upload File</legend>
-                          {{ form |crispy }}
+                          <legend class="border-bottom mb-4">Update ACFT Score </legend>
+                          {{ acft_form |crispy }}
                         </fieldset>
                         <div class="form-group">
-                          <button class="btn btn-primary btn-sm" type="submit">Upload</button>
-
+                          <button class="btn btn-primary btn-sm" type="submit">Update
+                          </button>
+                           <a href="profile/">Cancel</a>
                         </div>
 
 

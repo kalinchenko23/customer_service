@@ -1,11 +1,13 @@
 from django.shortcuts import render ,redirect
 from django.contrib import messages
 import os
+from django.http import JsonResponse
 from .send_aer import SendAER
 from customer_s import settings
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, PdfForm, AerForm, RankForm
+from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm, PdfForm,
+    AerForm, RankForm, ACFTForm)
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Document
+from .models import Profile, Document, User, ACFT
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
 from django.urls import reverse
@@ -18,38 +20,16 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+from .convert_acft_to_points import *
 
 x=SendAER()
-
-@login_required(login_url='/login')
-def profile(request):
-    if request.method=="POST":
-        u_form=UserUpdateForm(request.POST,instance=request.user)
-        p_form=ProfileUpdateForm(request.POST,request.FILES ,instance=request.user.profile)
-
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
-            p_form.save()
-            messages.success(request, f"Your account has been updated!")
-            return redirect("/profile")
-
-
-    else:
-        u_form=UserUpdateForm(instance=request.user)
-        p_form=ProfileUpdateForm(instance=request.user.profile)
-
-
-    context={"u_form":u_form,
-             "p_form":p_form
-             }
-    return render(request,'users/profile.html',context)
-
+y=ScoreCalculator()
 
 
 
 class PdfListView(LoginRequiredMixin, ListView):
     model = Document
-    template_name='users/pdf_list.html'
+    template_name='users/profile.html'
     context_object_name= 'document'
     def get_queryset(self):
         queryset = Document.objects.all()
@@ -67,7 +47,7 @@ class PdfListView(LoginRequiredMixin, ListView):
 class PdfCreateView(LoginRequiredMixin, CreateView):
     model = Document
     fields = ['title', 'pdf']
-    template_name='users/profile.html'
+    template_name='users/pdf_list.html'
 
     def get_success_url(self):
         return reverse('pdf-list')
@@ -75,6 +55,24 @@ class PdfCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
+
+
+
+
+@login_required(login_url='/login')
+def create_acft(request):
+    if request.method=="POST":
+        acft_form=ACFTForm(request.POST,instance=request.user)
+        if acft_form.is_valid():
+            acft_form.save()
+            messages.success(request, f"Your ACFT score has been updated!")
+        return redirect("/profile")
+    else:
+        acft_form=ACFTForm(instance=request.user)
+
+    context={"acft_form":acft_form
+             }
+    return render(request,'users/ACFT.html',context)
 
 
 
@@ -102,19 +100,18 @@ class PdfUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 
 
-
+@login_required(login_url='/login')
 def deleate_pdf(request,pk):
     if request.method=="POST":
         pdf=Document.objects.get(pk=pk)
         pdf.delete()
     return redirect("pdf-list")
 
-# customer_s/media/profile_pdf/Resume_.pdf
 
 
 
 
-
+@login_required(login_url='/login')
 def send_email_pdf(request,pk):
     if request.method=="POST":
         pdf=Document.objects.get(pk=pk).pdf
@@ -131,12 +128,16 @@ def send_email_pdf(request,pk):
 
 
 
-
+@login_required(login_url='/login')
 def aer(request):
     form=AerForm()
+
     if request.method == 'POST':
+
         form = AerForm(request.POST)
         if form.is_valid():
+            user=request.user.get_full_name()
+            rank=request.user.profile.rank
             q1=form.cleaned_data["q1"]
             q2=form.cleaned_data["q2"]
             q3=form.cleaned_data["q3"]
@@ -151,7 +152,7 @@ def aer(request):
             q12=form.cleaned_data["q12"]
             q13=form.cleaned_data["q13"]
             q14=form.cleaned_data["q14"]
-            x.pdf_built(q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14)
+            x.pdf_built(q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,user,rank)
             email = EmailMessage(
                 'Document',
                 'Please see a document attached.',
@@ -159,8 +160,9 @@ def aer(request):
                 ['kalinchenko.97@mail.ru'])
             email.attach_file('/Users/maximkalinchenko/Desktop/customer_service/customer_s/media/aer/aer.pdf')
             email.send()
-        messages.success(request, f"The AER was successfully sent")
-        return redirect("/profile")
+
+            messages.success(request, f"The AER was successfully sent")
+            return redirect("/profile")
 
 
     context={
@@ -187,12 +189,14 @@ def register(request):
         rank=RankForm()
     return render(request, 'users/register.html',{"form":form,"rank":rank})
 
+
+@login_required(login_url='/login')
 def update_profile(request):
     if request.method=="POST":
         u_form=UserUpdateForm(request.POST,instance=request.user)
         p_form=ProfileUpdateForm(request.POST,request.FILES ,instance=request.user.profile)
         if p_form.is_valid():
-
+            u_form.save()
             p_form.save()
             messages.success(request, f"Your account has been updated!")
         return redirect("/profile")
@@ -204,5 +208,24 @@ def update_profile(request):
              "p_form":p_form,
              }
     return render(request,'users/update_profile.html',context)
+
+
+@login_required(login_url='/login')
+def resultsACFT(request):
+
+    user = request.user
+    event=ACFT.objects.all()
+    event=event.filter(owner=user)
+    for i in event:
+        pushups_score=y.pushups(i.pushups)
+        run_score=y.run(i.run)
+        deadlift_score=y.dead_lift(i.dead_lift)
+        sprint_drug_score=y.sdc(i.sprint_drag)
+        leg_tuck_score=y.leg_t(i.leg_tucks)
+        ball_score=y.ball(i.ball)
+    data=[{"pushups":pushups_score},{"ball":ball_score},{"sprint drag":sprint_drug_score},{"leg tucks":leg_tuck_score},
+            {"run":run_score},{"dead lift":deadlift_score}]
+    return JsonResponse(data, safe=False)
+
 
 
