@@ -22,9 +22,14 @@ class Profile(models.Model):
         img = Image.open(self.image.path)
 
         if img.height > 250 or img.width > 250:
-            output_size = (250, 250)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+            size = (400, 400)
+
+            img.thumbnail(size, Image.ANTIALIAS)
+            background = Image.new('RGBA', size, (255, 255, 255, 0))
+            background.paste(
+                img, (int((size[0] - img.size[0]) / 2), int((size[1] - img.size[1]) / 2)))
+            background = background.convert("RGB")
+            background.save(self.image.path)
 
 class Document(models.Model):
     created_by=models.ForeignKey(User,null=True,on_delete= models.CASCADE)
@@ -59,14 +64,14 @@ class ACFT(models.Model):
 
 
 
-# @receiver(models.signals.pre_save, sender=Profile)
-# def delete_file_on_change_extension(sender, instance, **kwargs):
-#     if instance.pk:
-#         try:
-#             old_img = Profile.objects.get(pk=instance.pk).image
-#         except Profile.DoesNotExist:
-#             return
-#         else:
-#             new_img = instance.image
-#             if old_img and old_img.url != new_img.url:
-#                 old_img.delete(save=False)
+@receiver(models.signals.pre_save, sender=Profile)
+def delete_file_on_change_extension(sender, instance, **kwargs):
+    if instance.pk:
+        try:
+            old_img = Profile.objects.get(pk=instance.pk).image
+        except Profile.DoesNotExist:
+            return
+        else:
+            new_img = instance.image
+            if old_img and old_img.url != new_img.url:
+                old_img.delete(save=False)

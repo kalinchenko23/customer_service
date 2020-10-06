@@ -64,6 +64,8 @@ class ScoreCalculator():
         for k,v in self.push.items():
             if k==str(rep):
                 score=v
+            elif rep>60:
+                score=100
 
         return score
 
@@ -72,12 +74,17 @@ class ScoreCalculator():
         for k,v in self.rn.items():
             if k==time:
                 score=v
+            elif time<"13:30":
+                score=100
         return score
     def sdc(self,time):
         score=0
         for k,v in self.sprint_d_c.items():
             if k==time:
                 score=v
+
+            elif time<"1:33":
+                score=100
         return score
 
     def dead_lift(self,weight):
@@ -101,6 +108,7 @@ class ScoreCalculator():
                 score=v
 
         return score
+
 
 
 
