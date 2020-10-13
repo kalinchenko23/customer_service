@@ -77,6 +77,9 @@ def create_acft(request):
 
 
 
+
+
+
 class PdfUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Document
     fields = ['title', 'pdf']
@@ -226,6 +229,4 @@ def resultsACFT(request):
     data=[{"pushups":pushups_score},{"ball":ball_score},{"sprint drag":sprint_drug_score},{"leg tucks":leg_tuck_score},
             {"run":run_score},{"dead lift":deadlift_score}]
     return JsonResponse(data, safe=False)
-
-
 

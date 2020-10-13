@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{%static 'css/owl.theme.default.min.css'%}">
     <link rel="stylesheet" href="{%static 'css/bootstrap-datepicker.css'%}">
     <link rel="stylesheet" href="{%static 'css/animate.css'%}">
+    <link rel="stylesheet" href="{%static 'css/calendar.css'%}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelementplayer.min.css">
 
@@ -49,7 +50,7 @@
           <div class="py-1">
             <div class="row align-items-center">
               <div class="col-2">
-                <h2 class="mb-0 site-logo"><a href="index.html">Confe.</a></h2>
+                <h2 class="mb-0 site-logo"><a href="index.html"></a></h2>
               </div>
               <div class="col-10">
                 <nav class="site-navigation text-right" role="navigation">
@@ -83,7 +84,7 @@
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-10 text-center" data-aos="fade">
-            <h1 class="mb-4">The Challenges of Business Innovation</h1>
+            <h1 class="mb-4">Customer Service</h1>
             <p class="mb-5">April 17-21, 2019 &bullet; Vancouver</p>
             <p class="regular-font-size">
               <a href="#" class="btn btn-primary px-4 py-3 text-uppercase">Get Your Ticket</a>
@@ -97,24 +98,60 @@
 
 
 
-    <div class="site-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-7 mx-auto text-left section-heading">
-            <h2 class="mb-5 text-uppercase">About The Conference</h2>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-7">
-            <h3 class="regular-font-size text-uppercase mb-3">Conference Begins In</h3>
-            <div id="date-countdown" class="mb-4"></div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates in iusto hic temporibus, dolorum eius quisquam libero rerum voluptate, rem ab neque quasi officia dolorem quis provident. Atque, tempora id.</p>
-            <p class="mb-5">Praesentium, harum, omnis. Pariatur id illo, veritatis possimus itaque molestiae modi reprehenderit magnam necessitatibus animi sapiente, rem est impedit debitis quidem illum, dignissimos velit aspernatur perferendis fuga. Quisquam voluptatem, eveniet.</p>
-            <p><a href="#" class="btn btn-primary px-4 py-2">Get Your Ticket Now</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
+
+  <!-- For Demo Purpose -->
+  <header class="text-center text-white mb-5">
+    <h1 class="display-4">CS section schedule</h1>
+
+    <p class="font-italic">Snippet By <a href="https://bootstrapious.com" class="text-white">
+        <u>Bootstrapious</u></a>
+    </p>
+  </header>
+
+
+  <div id="calendar-wrap">
+        <header>
+            <h1>{{month_and_year.0}} {{month_and_year.1}} </h1>
+
+        </header>
+        <div id="calendar">
+          <ul class="weekdays">
+
+            <li>Monday</li>
+            <li>Tuesday</li>
+            <li>Wednesday</li>
+            <li>Thursday</li>
+            <li>Friday</li>
+            <li>Saturday</li>
+            <li>Sunday</li>
+          </ul>
+
+          <!-- Days from previous month -->
+
+          <ul class="days">
+
+            {%for i in days%}
+            {%if i == 0%}
+            <li class="day">
+              <div class="date"> </div>
+            {%elif i != 0%}
+            <li class="day">
+              <div class="date">{{i}}</div>
+            {%endif%}
+              {%if event_date == i%}
+              {%for i in event%}
+              <div class="event-desc">{{i}}</div>
+              {%endfor%}
+              {%endif%}
+                <div class="event-time"> </div>
+            </li>
+            {%endfor%}
+          </ul>
+
+
+
+        </div><!-- /. calendar -->
+      </div><!-- /. wrap -->
 
     <div class="site-block-half d-flex images">
       <div class="image bg-image" style="background-image: url({%static 'images/img_1.jpg'%});">
