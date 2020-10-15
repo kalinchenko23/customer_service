@@ -49,16 +49,16 @@ class Document(models.Model):
 class ACFT(models.Model):
     pushaps_choices=[tuple([x,x]) for x in range(1,61)]
     dead_lift_choices=[tuple([x,x]) for x in range(140,341,10)]
-    leg_tucks_choices=[tuple([x,x]) for x in range(1,21)]
+    leg_tucks_choices=[tuple([x,x]) for x in range(21)]
 
 
-    owner=models.ForeignKey(User, null=True,on_delete= models.CASCADE)
-    pushups=models.IntegerField(blank=True,choices=pushaps_choices, max_length=2)
+    owner=models.ForeignKey(User,null=True,on_delete= models.CASCADE)
+    pushups=models.IntegerField(choices=pushaps_choices, max_length=2)
     ball=models.CharField(blank=True, max_length=4)
     sprint_drag=models.CharField(blank=True, max_length=5)
-    leg_tucks=models.IntegerField(blank=True,choices=leg_tucks_choices, max_length=2)
+    leg_tucks=models.IntegerField(choices=leg_tucks_choices, max_length=2)
     run=models.CharField(blank=True, max_length=5)
-    dead_lift=models.IntegerField(blank=True,choices=dead_lift_choices, max_length=3)
+    dead_lift=models.IntegerField(choices=dead_lift_choices, max_length=3)
     def __str__(self):
         return f'{self.owner} ACFT'
 

@@ -1,25 +1,16 @@
+{% extends 'users/profile.html' %}
 <!doctype html>
 {%load static%}
 {% load crispy_forms_tags %}
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-<link rel="stylesheet" href="{%static 'css/profile.css'%}">
-<body>
-  <div class="main-content">
-    {% if messages %}
-    {%for message in messages%}
-        <div class="alert alert-{{message.tags}}">
-          {{message}}
-        </div>
+{% block data %}
 
-    {%endfor%}
-    {% endif %}
-
-    <div class="card-body" >
+<div class="card-body" >
               <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <fieldset class="form-group">
                           <legend class="border-bottom mb-4">Update ACFT Score </legend>
-                          {{ acft_form |crispy }}
+                          <legend class="border-bottom mb-4">NOTE: if you failed an event leave the field blank. And yeah you got this next time! </legend>
+                          {{ form | crispy }}
                         </fieldset>
                         <div class="form-group">
                           <button class="btn btn-primary btn-sm" type="submit">Update
@@ -32,3 +23,5 @@
 
 
                     </div>
+
+        {% endblock %}

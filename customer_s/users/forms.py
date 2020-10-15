@@ -64,7 +64,7 @@ class ACFTForm(forms.ModelForm):
         model=ACFT
         fields=['pushups', 'ball','sprint_drag','leg_tucks','run','dead_lift']
         widgets = {
-            'ball': forms.TextInput(attrs={'placeholder': 'format 0,0'}),
+            'ball': forms.TextInput(attrs={'placeholder': 'format 0.0'}),
             'sprint_drag': forms.TextInput(attrs={'placeholder': 'format 00:00'}),
             'run': forms.TextInput(attrs={'placeholder': 'format 00:00'}),
         }

@@ -29,7 +29,7 @@ y=ScoreCalculator()
 
 class PdfListView(LoginRequiredMixin, ListView):
     model = Document
-    template_name='users/profile.html'
+    template_name='users/pdf_list.html'
     context_object_name= 'document'
     def get_queryset(self):
         queryset = Document.objects.all()
@@ -47,7 +47,7 @@ class PdfListView(LoginRequiredMixin, ListView):
 class PdfCreateView(LoginRequiredMixin, CreateView):
     model = Document
     fields = ['title', 'pdf']
-    template_name='users/pdf_list.html'
+    template_name='users/pdf_upload.html'
 
     def get_success_url(self):
         return reverse('pdf-list')
@@ -56,23 +56,57 @@ class PdfCreateView(LoginRequiredMixin, CreateView):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
+class ACFTCreateView(LoginRequiredMixin, CreateView):
+    model = ACFT
+    form_class=ACFTForm
+
+    template_name='users/ACFT.html'
+
+    def get_success_url(self):
+        return reverse('pdf-list')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+class ACFTCupdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = ACFT
+    form_class=ACFTForm
+
+    template_name='users/ACFT.html'
+
+    def get_success_url(self):
+        return reverse('pdf-list')
+
+    def test_func(self):
+        score = self.get_object()
+        if self.request.user == score.owner:
+            return True
+        return False
+
+    def get_success_url(self):
+        return reverse('pdf-list')
 
 
 
 @login_required(login_url='/login')
-def create_acft(request):
+def update_profile(request):
     if request.method=="POST":
-        acft_form=ACFTForm(request.POST,instance=request.user)
-        if acft_form.is_valid():
-            acft_form.save()
-            messages.success(request, f"Your ACFT score has been updated!")
+        u_form=UserUpdateForm(request.POST,instance=request.user)
+        p_form=ProfileUpdateForm(request.POST,request.FILES ,instance=request.user.profile)
+        if p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f"Your account has been updated!")
         return redirect("/profile")
     else:
-        acft_form=ACFTForm(instance=request.user)
+        u_form=UserUpdateForm(instance=request.user)
+        p_form=ProfileUpdateForm(instance=request.user.profile)
 
-    context={"acft_form":acft_form
+    context={"u_form":u_form,
+             "p_form":p_form,
              }
-    return render(request,'users/ACFT.html',context)
+    return render(request,'users/update_profile.html',context)
 
 
 
@@ -192,25 +226,6 @@ def register(request):
         rank=RankForm()
     return render(request, 'users/register.html',{"form":form,"rank":rank})
 
-
-@login_required(login_url='/login')
-def update_profile(request):
-    if request.method=="POST":
-        u_form=UserUpdateForm(request.POST,instance=request.user)
-        p_form=ProfileUpdateForm(request.POST,request.FILES ,instance=request.user.profile)
-        if p_form.is_valid():
-            u_form.save()
-            p_form.save()
-            messages.success(request, f"Your account has been updated!")
-        return redirect("/profile")
-    else:
-        u_form=UserUpdateForm(instance=request.user)
-        p_form=ProfileUpdateForm(instance=request.user.profile)
-
-    context={"u_form":u_form,
-             "p_form":p_form,
-             }
-    return render(request,'users/update_profile.html',context)
 
 
 @login_required(login_url='/login')

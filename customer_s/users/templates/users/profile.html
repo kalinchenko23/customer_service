@@ -135,59 +135,16 @@
                   <h3 class="mb-0">My account</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="/acft_create" class="btn btn-sm btn-primary">Update ACFT</a>
+                  <a href="/acft_create" class="btn btn-sm btn-primary">Submit ACFT score</a>
+
                 </div>
+
               </div>
             </div>
             <div class="card-body">
               {% block data %}
 
-                  <table class="table mb-0">
-                    <thead>
-                      <tr>
-                        <th>Title</th>
-                        <th>Download</th>
-                        <th>Delete</th>
-                        <th>Update</th>
-                        <th>Send Email</th>
 
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                      {% for i in document %}
-                        <tr>
-
-                          <td >{{ i.title }}</td>
-                          <td>
-                            <a href="{{ i.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
-                              Download PDF
-                            </a>
-                          </td>
-                          <td>
-                            <form method="post" action="{% url 'pdf_deleate' i.pk %}">
-                              {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm" >Delete</button >
-                            </form>
-
-                          <td>
-                            <form method="post" action="{% url 'pdf_update' i.pk %}">
-                              {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Update</button >
-                            </form>
-
-                          <td>
-                            <form method="post" action="{% url 'pdf_email' i.pk %}">
-                              {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm" >Send Email </button >
-                            </form>
-                      </tr>
-                      {% endfor %}
-
-                    </tbody>
-                  </table>
-
-                <hr class="my-4">
                 {% endblock %}
 
                 <div id="myChart"></div>
