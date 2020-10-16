@@ -79,7 +79,7 @@ class ACFTCupdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return reverse('pdf-list')
 
     def test_func(self):
-        score = self.get_object()
+        score = self.get_object(pk)
         if self.request.user == score.owner:
             return True
         return False

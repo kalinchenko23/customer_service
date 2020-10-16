@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
-
+from django.urls import re_path
 
 urlpatterns = [
-    path('',views.home)
+    path('',views.home),
+    re_path(r'saw_something/$',views.saw_something)
 ]
