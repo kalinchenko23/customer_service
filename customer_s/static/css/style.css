@@ -717,7 +717,10 @@ a {
     -webkit-transform: scale(1.2);
     -ms-transform: scale(1.2);
     transform: scale(1.2); }
-
+.img-fluid{
+  width: 350px;
+  height: 440px;
+}
 .block-13, .block-14, .block-15, .slide-one-item {
   position: relative;
   z-index: 1; }

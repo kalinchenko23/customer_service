@@ -68,15 +68,13 @@
                      <!-- d-lg-block -->
                     <ul class="site-menu js-clone-nav d-none">
                       <li class="active">
-                        <a href="/">Home</a>
+                        <a href="/" >Home</a>
                       </li>
                       <li class="active">
                         <a href="/profile">My Profile</a>
                       </li>
                       <li><a href="saw_something/">See something - Say something </a></li>
-                      <li><a href="venue.html">Venue</a></li>
-                      <li><a href="sponsors.html">Sponsors</a></li>
-                      <li><a href="about.html">About</a></li>
+
                       <li><a href="/logout">Log out</a></li>
                     </ul>
                   </div>
@@ -88,16 +86,14 @@
       </div>
     </div>
 
-    <div class="site-blocks-cover overlay" style="background-image: url({%static 'images/hero_1.jpg'%});" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay" style="background-image: url({%static 'images/IMG_2376.jpg'%});" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-10 text-center" data-aos="fade">
             <h1 class="mb-4">Customer Service</h1>
-            <p class="mb-5">April 17-21, 2019 &bullet; Vancouver</p>
+            <p class="mb-5">{{today}}&bullet; FT CARSON</p>
             <p class="regular-font-size">
-              <a href="#" class="btn btn-primary px-4 py-3 text-uppercase">Get Your Ticket</a>
-              <span class="mx-3">or</span>
-              <a href="#" class="text-white">Learn More</a>
+              <a href="/profile" class="btn btn-primary px-4 py-3 text-uppercase">Go to your profile</a>
             </p>
           </div>
         </div>
@@ -108,21 +104,18 @@
 
 
   <!-- For Demo Purpose -->
-  <header class="text-center text-white mb-5">
-    <h1 class="display-4">CS section schedule</h1>
+  <div class="text-center text-white mb-5"style="background-color: #556B2F">
 
-    <p class="font-italic">Snippet By <a href="https://bootstrapious.com" class="text-white">
-        <u>Bootstrapious</u></a>
-    </p>
-  </header>
+    <h1 class="display-4">CS section schedule</h1 >
 
 
-  <div id="calendar-wrap">
+  <div id="calendar-wrap"style="background-color: #556B2F">
         <header>
             <h1>{{month_and_year.0}} {{month_and_year.1}} </h1>
 
         </header>
-        <div id="calendar">
+
+        <div id="calendar" >
           <ul class="weekdays">
 
             <li>Monday</li>
@@ -146,95 +139,35 @@
             <li class="day">
               <div class="date">{{i}}</div>
             {%endif%}
-              {%if event_date == i%}
-              {%for i in event%}
-              <div class="event-desc">{{i}}</div>
-              {%endfor%}
+            {%for a in d%}
+            {%if a.0 == i%}
+              <div class="event-desc" style="color: black">{{a.1}}</div>
+              {%if today_split == i%}
+              <div class="event-desc" style="color: red">{{uniform}}</div>
               {%endif%}
+              {%endif%}
+              {%endfor%}
+
+
                 <div class="event-time"> </div>
             </li>
             {%endfor%}
+          </li>
           </ul>
+
+
 
 
 
         </div><!-- /. calendar -->
       </div><!-- /. wrap -->
 
-    <div class="site-block-half d-flex images">
-      <div class="image bg-image" style="background-image: url({%static 'images/img_1.jpg'%});">
-      </div>
-      <div class="image bg-image" style="background-image: url({%static 'images/img_2.jpg'%});">
-      </div>
-    </div>
-
-
-    <div class="site-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-            <h2 class="mb-5 text-uppercase">Speakers</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="speaker text-left">
-              <a href="speaker-single.html" class="d-block mb-3 thumbnail"><img src="images/person_1.jpg" alt="Image" class="img-fluid"></a>
-              <h3 class="heading mb-0"><a href="#"><span>Will</span> Peters</a></h3>
-              <p>Business Consultant in Google</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="speaker text-left">
-              <a href="speaker-single.html" class="d-block mb-3 thumbnail"><img src="images/person_2.jpg" alt="Image" class="img-fluid"></a>
-              <h3 class="heading mb-0"><a href="#"><span>Abigail</span> McMillan</a></h3>
-              <p>Business Consultant in Facebook</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="speaker text-left">
-              <a href="speaker-single.html" class="d-block mb-3 thumbnail"><img src="images/person_3.jpg" alt="Image" class="img-fluid"></a>
-              <h3 class="heading mb-0"><a href="#"><span>Jean</span> Keenan</a></h3>
-              <p>Business Consultant in Medium</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="speaker text-left">
-              <a href="speaker-single.html" class="d-block mb-3 thumbnail"><img src="images/person_4.jpg" alt="Image" class="img-fluid"></a>
-              <h3 class="heading mb-0"><a href="#"><span>Justin</span> Clark</a></h3>
-              <p>Business Consultant in Slack</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="speaker text-left">
-              <a href="speaker-single.html" class="d-block mb-3 thumbnail"><img src="images/person_5.jpg" alt="Image" class="img-fluid"></a>
-              <h3 class="heading mb-0"><a href="#"><span>Bryan</span> Forster</a></h3>
-              <p>Business Consultant in WordPress</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="speaker text-left">
-              <a href="speaker-single.html" class="d-block mb-3 thumbnail"><img src="images/person_6.jpg" alt="Image" class="img-fluid"></a>
-              <h3 class="heading mb-0"><a href="#"><span>Matt</span> Nelson</a></h3>
-              <p>Business Consultant in Evernote</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="site-block-half d-flex images">
-      <div class="image bg-image" style="background-image: url('images/img_3.jpg');">
-      </div>
-      <div class="image bg-image" style="background-image: url('images/img_4.jpg');">
-      </div>
-    </div>
 
 
 
-    <div class="site-section">
+
+
+    <div class="site-section" style="background-color: #EEE8AA">
       <div class="container">
         <div class="row">
           <div class="col-md-6 mx-auto text-center mb-5 section-heading">
@@ -246,15 +179,15 @@
             <div class="text-center p-4 item">
               <span class="flaticon-paper-plane display-3 mb-3 d-block text-primary"></span>
               <h2 class="h5 text-uppercase">Our Mission</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati reprehenderit explicabo quos fugit vitae dolorum.</p>
+              <p style="color: black">We are here to help sodiers with all of their pay issues, we are the ones who makes them ready for the mission. </p>
             </div>
           </div>
 
           <div class="col-md-4 col-lg-4">
             <div class="text-center p-4 item">
               <span class="flaticon-speaker display-3 mb-3 d-block text-primary"></span>
-              <h2 class="h5 text-uppercase">MP3 with Transcript</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati reprehenderit explicabo quos fugit vitae dolorum.</p>
+              <h2 class="h5 text-uppercase">Our Duties</h2>
+              <p style="color: black">We are maintain our rediness by constantly training and improving our skills day by day to make sure that we are ready whenever they need us.</p>
             </div>
           </div>
 
@@ -262,7 +195,7 @@
             <div class="text-center p-4 item">
               <span class="flaticon-chat-1 display-3 mb-3 d-block text-primary"></span>
               <h2 class="h5 text-uppercase">Good Reviews</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati reprehenderit explicabo quos fugit vitae dolorum.</p>
+              <p style="color: black">Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati reprehenderit explicabo quos fugit vitae dolorum.</p>
             </div>
           </div>
 
@@ -270,56 +203,14 @@
       </div>
     </div>
 
-    <div class="site-section">
+
+
+
+    <div class="site-section block-15" style="background-color: #556B2F">
       <div class="container">
         <div class="row">
           <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-            <h2 class="mb-5 text-uppercase">Sponsors</h2>
-          </div>
-        </div>
-        <div class="row mb-5">
-          <div class="col-6 col-md-6 col-lg-4">
-            <img src="images/logo_1.png" alt="Image" class="img-fluid">
-          </div>
-          <div class="col-6 col-md-6 col-lg-4">
-            <img src="images/logo_2.png" alt="Image" class="img-fluid">
-          </div>
-          <div class="col-6 col-md-6 col-lg-4">
-            <img src="images/logo_3.png" alt="Image" class="img-fluid">
-          </div>
-          <div class="col-6 col-md-6 col-lg-4">
-            <img src="images/logo_4.png" alt="Image" class="img-fluid">
-          </div>
-          <div class="col-6 col-md-6 col-lg-4">
-            <img src="images/logo_5.png" alt="Image" class="img-fluid">
-          </div>
-          <div class="col-6 col-md-6 col-lg-4">
-            <img src="images/logo_6.png" alt="Image" class="img-fluid">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="p-4 border text-center">
-              <h2>Your Company Here</h2>
-              <div class="row justify-content-center">
-                <div class="col-md-7">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda quisquam in illo, odit debitis praesentium velit laborum quaerat, doloribus eius consectetur! Tempore reprehenderit delectus ducimus nisi quidem distinctio, excepturi! Libero.</p>
-                  <p><a href="#" class="btn btn-primary px-4 py-2">Become a Sponsor</a></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="site-section block-15">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-            <h2 class="text-uppercase">Conference Events</h2>
+            <h2 class="text-uppercase">Our Team</h2>
           </div>
         </div>
 
@@ -330,100 +221,67 @@
             <div class="media-with-text">
               <div class="img-border-sm mb-4">
                 <a href="#" class="popup-vimeo image-play">
-                  <img src="images/img_1.jpg" alt="" class="img-fluid">
+                  <img src="static/images/KALINCHENKO.jpg" alt="" class="img-fluid">
                 </a>
               </div>
-              <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-              <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+              <h2 class="heading mb-0"><a href="#">SPC KALINCHENKO</a></h2>
+              <span class="mb-3 d-block post-date" style="color: black">AUG 31, 1997</a></span>
+              <p>From Ukraine</p>
             </div>
 
             <div class="media-with-text">
               <div class="img-border-sm mb-4">
                 <a href="#" class="popup-vimeo image-play">
-                  <img src="images/img_2.jpg" alt="" class="img-fluid">
+                  <img src="static/images/SOTO.jpg" alt="" class="img-fluid">
                 </a>
               </div>
-              <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-              <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+              <h2 class="heading mb-0"><a href="#">SPC SOTOMARTINEZ</a></h2>
+              <span class="mb-3 d-block post-date" style="color: black">JULY 25, 1986 </a></span>
+              <p>From Puerto Ricko</p>
             </div>
 
             <div class="media-with-text">
               <div class="img-border-sm mb-4">
                 <a href="#" class="popup-vimeo image-play">
-                  <img src="images/img_3.jpg" alt="" class="img-fluid">
+                  <img src="static/images/CAMEN.jpg" alt="" class="img-fluid">
                 </a>
               </div>
-              <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-              <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+              <h2 class="heading mb-0"><a href="#">SGT CAMEN</a></h2>
+              <span class="mb-3 d-block post-date" style="color: black">AUG 6, 1990 </a></span>
+              <p>From Columbia</p>
             </div>
 
             <div class="media-with-text">
               <div class="img-border-sm mb-4">
                 <a href="#" class="popup-vimeo image-play">
-                  <img src="images/img_1.jpg" alt="" class="img-fluid">
+                  <img src="static/images/CONRAD.jpg" alt="" class="img-fluid">
                 </a>
               </div>
-              <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-              <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+              <h2 class="heading mb-0"><a href="#">SGT CONRAD</a></h2>
+              <span class="mb-3 d-block post-date" style="color: black">Nov 21, 1987</a></span>
+              <p>From Tennessee</p>
             </div>
 
             <div class="media-with-text">
               <div class="img-border-sm mb-4">
                 <a href="#" class="popup-vimeo image-play">
-                  <img src="images/img_2.jpg" alt="" class="img-fluid">
+                  <img src="static/images/ALLOWANOO.jpg" alt="" class="img-fluid">
                 </a>
               </div>
-              <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-              <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+              <h2 class="heading mb-0"><a href="#">PV2 ALLOWANOO</a></h2>
+              <span class="mb-3 d-block post-date" style="color: black">OCT 24, 1998 </a></span>
+              <p>From Benin</p>
             </div>
 
             <div class="media-with-text">
               <div class="img-border-sm mb-4">
                 <a href="#" class="popup-vimeo image-play">
-                  <img src="images/img_3.jpg" alt="" class="img-fluid">
+                  <img src="static/images/KLAINOS.jpg" alt="" class="img-fluid">
                 </a>
               </div>
-              <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-              <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-            </div>
-
-            <div class="media-with-text">
-              <div class="img-border-sm mb-4">
-                <a href="#" class="popup-vimeo image-play">
-                  <img src="images/img_1.jpg" alt="" class="img-fluid">
-                </a>
-              </div>
-              <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-              <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-            </div>
-
-            <div class="media-with-text">
-              <div class="img-border-sm mb-4">
-                <a href="#" class="popup-vimeo image-play">
-                  <img src="images/img_2.jpg" alt="" class="img-fluid">
-                </a>
-              </div>
-              <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-              <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-            </div>
-
-            <div class="media-with-text">
-              <div class="img-border-sm mb-4">
-                <a href="#" class="popup-vimeo image-play">
-                  <img src="images/img_3.jpg" alt="" class="img-fluid">
-                </a>
-              </div>
-              <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-              <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+              <h2 class="heading mb-0"><a href="#">SPC KLAINOS</a></h2>
+              <span class="mb-3 d-block post-date" style="color: black">MAR 26, 1999</a></span>
+              <p>From Illinois</p>
             </div>
 
 
@@ -444,14 +302,16 @@
             <div>
               <span class="icon-room text-white h2 d-block"></span>
               <h2>Where</h2>
-              <p class="mb-0">Vancouber</p>
+              <p class="mb-0">1220 Specker Ave </p>
+              <p class="mb-0">Ft Carson</p>
             </div>
           </div>
           <div class="col-md-4 text-center">
             <div>
               <span class="icon-clock-o text-white h2 d-block"></span>
-              <h2>When</h2>
-              <p class="mb-0">April 17-21, 2019</p>
+              <h2>Operation hours</h2>
+              <p class="mb-0">Mon-Fri 9:30-15:30</p>
+              <p class="mb-0">Thursday is off due to the training</p>
             </div>
           </div>
           <div class="col-md-4 text-center">
@@ -472,44 +332,40 @@
 
         <div class="row">
           <div class="col-md-4">
-            <h3 class="footer-heading mb-4 text-white">About</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat quos rem ullam, placeat amet.</p>
-            <p><a href="#" class="btn btn-primary pill text-white px-4">Read More</a></p>
+            <h3 class="footer-heading mb-4 text-white">Our Chaplin</h3>
+            <p>CP Moen</p>
+            <p>845 702-7957</p>
           </div>
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-6">
-                <h3 class="footer-heading mb-4 text-white">Quick Menu</h3>
+                <h3 class="footer-heading mb-4 text-white">Resources available to you</h3>
                   <ul class="list-unstyled">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Venue</a></li>
-                    <li><a href="#">Sponsors</a></li>
-                    <li><a href="#">Get Ticket</a></li>
-                    <li><a href="#">News</a></li>
+                    <li><a href="https://www.sexualassault.army.mil">SHARP PROGRAM</a></li>
+                    <li><a href="https://www.carson.army.mil/organizations/eo.html">EO FT CARSON</a>
+                    <li><a href="https://comptroller.defense.gov/fmr.aspx">DOD FMR (finance regulations)</a>
+                    </li>
+
                   </ul>
               </div>
               <div class="col-md-6">
-                <h3 class="footer-heading mb-4 text-white">&nbsp;</h3>
-                  <ul class="list-unstyled">
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Event</a></li>
-                    <li><a href="#">Be a Sponsor</a></li>
-                  </ul>
+                <h3 class="footer-heading mb-4 text-white">Social Icons</h3>
+                  <p>
+                  <a href="https://www.facebook.com/4IDSustainmentBrigade/" class="pb-2 pr-2 pl-0"><span class="icon-facebook"></span></a>
+
+                  <a href="https://www.instagram.com/thefourthinfantrydivision/?hl=en" class="p-2"><span class="icon-instagram"></span></a>
+
+
+                </p>
               </div>
             </div>
           </div>
 
 
           <div class="col-md-2">
-            <div class="col-md-12"><h3 class="footer-heading mb-4 text-white">Social Icons</h3></div>
+            <div class="col-md-12"></div>
               <div class="col-md-12">
-                <p>
-                  <a href="#" class="pb-2 pr-2 pl-0"><span class="icon-facebook"></span></a>
-                  <a href="#" class="p-2"><span class="icon-twitter"></span></a>
-                  <a href="#" class="p-2"><span class="icon-instagram"></span></a>
-                  <a href="#" class="p-2"><span class="icon-vimeo"></span></a>
 
-                </p>
               </div>
           </div>
         </div>
@@ -517,15 +373,16 @@
           <div class="col-md-12">
             <p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy; <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All Rights Reserved | This template is made with <i class="icon-heart text-primary" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            Copyright &copy;
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
 
         </div>
       </div>
+      </div>
     </footer>
-  </div>
+
 
   <script src="{%static 'js/jquery-3.3.1.min.js'%}"></script>
   <script src="{%static 'js/jquery-migrate-3.0.1.min.js'%}"></script>

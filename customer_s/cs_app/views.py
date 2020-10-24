@@ -8,26 +8,28 @@ from .create_issue_pdf import SawSomething
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.urls import reverse
+from .uniform_selector import uniform
+import datetime
 # Create your views here.
 
 x=Calendar()
 y=SawSomething()
-
+today=str(datetime.date.today())
 @login_required(login_url='/login')
 def home(request):
-    date=Schedule.objects.all()
-    for i in date:
-        schedule_date=str(i.date).split("-")
-    if int(schedule_date[2]) in x.get_current_month_days():
-        event_date=int(schedule_date[2])
-        event=[str(i) for i in Schedule.objects.all()]
-    else:
-        event=""
-        event_date=""
+    today_split=int(str(datetime.date.today()).split("-")[2])
+    dat=Schedule.objects.all()
+    d=[(int(str(i.date).split("-")[2]),i.name) for i in dat]
+
+
+    event=""
+
     context={'days':x.get_current_month_days(),
-            'date':str(date),
-            'event_date':event_date,
-            'event':event,
+            'uniform':uniform,
+            'today_split':today_split,
+            'd':d,
+            'today':today,
+            'dat':dat,
             'month_and_year':x.get_current_month_and_year()}
     return render(request, 'cs_app/index.html',context)
 
