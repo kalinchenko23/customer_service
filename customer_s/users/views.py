@@ -241,6 +241,7 @@ def resultsACFT(request):
         sprint_drug_score=y.sdc(i.sprint_drag)
         leg_tuck_score=y.leg_t(i.leg_tucks)
         ball_score=y.ball(i.ball)
+        final=pushups_score+run_score+deadlift_score+sprint_drug_score+leg_tuck_score+ball_score
     data=[{"pushups":pushups_score},{"ball":ball_score},{"sprint drag":sprint_drug_score},{"leg tucks":leg_tuck_score},
             {"run":run_score},{"dead lift":deadlift_score}]
     return JsonResponse(data, safe=False)

@@ -75,8 +75,8 @@ body {
   line-height: 1.5;
   margin: 0;
   text-align: left;
-  color: #525f7f;
-  background-color: #f8f9fe;
+  color: black;
+  background-color: #556B2F;
 }
 
 [tabindex='-1']:focus {
@@ -501,7 +501,7 @@ a>code {
   padding: .625rem .75rem;
   transition: all .2s cubic-bezier(.68, -.55, .265, 1.55);
   color: #8898aa;
-  border: 1px solid #cad1d7;
+  border: 1px solid ;
   border-radius: .375rem;
   background-color: #fff;
   background-clip: padding-box;
@@ -642,15 +642,15 @@ textarea.form-control {
 
 .btn-primary {
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #5e72e4;
+  border-color: #006400;
+  background-color:#006400;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 
 .btn-primary:hover {
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #5e72e4;
+  border-color: #2F4F4F;
+  background-color: #2F4F4F;
 }
 
 .btn-primary:focus {
@@ -675,15 +675,21 @@ textarea.form-control {
 
 .btn-info {
   color: #fff;
-  border-color: #11cdef;
-  background-color: #11cdef;
+  border-color: #8FBC8F;
+  background-color: #8FBC8F;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
+#home_page {
+  color: #fff;
+  border-color: #FF7F50;
+  background-color: #FF7F50;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 
 .btn-info:hover {
   color: #fff;
-  border-color: #11cdef;
-  background-color: #11cdef;
+  border-color: #2F4F4F;
+  background-color: #2F4F4F;
 }
 
 .btn-info:focus {
@@ -709,7 +715,7 @@ textarea.form-control {
 .btn-default {
   color: #fff;
   border-color: #172b4d;
-  background-color: #172b4d;
+  background-color: red;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 
@@ -1552,6 +1558,7 @@ a.text-white:focus {
   transition: all .15s ease;
   transform: translate(-50%, -30%);
   border-radius: .375rem;
+  border-color: #556B2F;
 }
 
 .card-profile-image img:hover {

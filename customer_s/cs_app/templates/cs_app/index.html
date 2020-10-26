@@ -1,14 +1,9 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-{% if messages %}
-{%for message in messages%}
-    <div class="alert alert-{{message.tags}}">
-      {{message}}
-    </div>
 
-{%endfor%}
-{% endif %}
+<!DOCTYPE html>
+
+<html lang="en">
+
   <head>
     <title>Customer Service</title>
     <meta charset="utf-8">
@@ -39,19 +34,30 @@
   </head>
   <body>
 
+
   <div class="site-wrap">
 
-    <div class="site-mobile-menu">
+
+    <div class="site-mobile-menu" style="background-color: #F0E68C">
       <div class="site-mobile-menu-header">
         <div class="site-mobile-menu-close mt-3">
           <span class="icon-close2 js-menu-toggle"></span>
         </div>
+
       </div>
-      <div class="site-mobile-menu-body"></div>
+      <div class="site-mobile-menu-body" ></div>
     </div> <!-- .site-mobile-menu -->
 
 
     <div class="site-navbar-wrap js-site-navbar bg-white">
+      {% if messages %}
+    {%for message in messages%}
+    <div class="alert alert-{{message.tags}}">
+      {{message}}
+    </div>
+
+    {%endfor%}
+    {% endif %}
 
       <div class="container">
         <div class="site-navbar bg-light">
@@ -70,7 +76,7 @@
                       <li class="active">
                         <a href="/" >Home</a>
                       </li>
-                      <li class="active">
+                      <li class="active" >
                         <a href="/profile">My Profile</a>
                       </li>
                       <li><a href="saw_something/">See something - Say something </a></li>
@@ -92,8 +98,8 @@
           <div class="col-md-10 text-center" data-aos="fade">
             <h1 class="mb-4">Customer Service</h1>
             <p class="mb-5">{{today}}&bullet; FT CARSON</p>
-            <p class="regular-font-size">
-              <a href="/profile" class="btn btn-primary px-4 py-3 text-uppercase">Go to your profile</a>
+            <p class="regular-font-size" >
+              <a href="/profile" class="btn btn-primary px-4 py-3 text-uppercase" >Go to your profile</a>
             </p>
           </div>
         </div>
@@ -103,10 +109,14 @@
 
 
 
+
+
   <!-- For Demo Purpose -->
+
   <div class="text-center text-white mb-5"style="background-color: #556B2F">
 
     <h1 class="display-4">CS section schedule</h1 >
+
 
 
   <div id="calendar-wrap"style="background-color: #556B2F">
@@ -115,7 +125,8 @@
 
         </header>
 
-        <div id="calendar" >
+
+        <div id="calendar"  >
           <ul class="weekdays">
 
             <li>Monday</li>
@@ -133,10 +144,10 @@
 
             {%for i in days%}
             {%if i == 0%}
-            <li class="day">
-              <div class="date"> </div>
+            <li class="day" style="background-color: #F0E68C">
+              <div class="date" > </div>
             {%elif i != 0%}
-            <li class="day">
+            <li class="day" style="background-color: #F0E68C">
               <div class="date">{{i}}</div>
             {%endif%}
             {%for a in d%}
@@ -147,9 +158,6 @@
               {%endif%}
               {%endif%}
               {%endfor%}
-
-
-                <div class="event-time"> </div>
             </li>
             {%endfor%}
           </li>
@@ -161,47 +169,24 @@
 
         </div><!-- /. calendar -->
       </div><!-- /. wrap -->
-
-
-
-
-
-
-    <div class="site-section" style="background-color: #EEE8AA">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-            <h2 class="mb-5 text-uppercase">Why Us?</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-lg-4">
-            <div class="text-center p-4 item">
-              <span class="flaticon-paper-plane display-3 mb-3 d-block text-primary"></span>
-              <h2 class="h5 text-uppercase">Our Mission</h2>
-              <p style="color: black">We are here to help sodiers with all of their pay issues, we are the ones who makes them ready for the mission. </p>
-            </div>
-          </div>
-
-          <div class="col-md-4 col-lg-4">
-            <div class="text-center p-4 item">
-              <span class="flaticon-speaker display-3 mb-3 d-block text-primary"></span>
-              <h2 class="h5 text-uppercase">Our Duties</h2>
-              <p style="color: black">We are maintain our rediness by constantly training and improving our skills day by day to make sure that we are ready whenever they need us.</p>
-            </div>
-          </div>
-
-          <div class="col-md-4 col-lg-4">
-            <div class="text-center p-4 item">
-              <span class="flaticon-chat-1 display-3 mb-3 d-block text-primary"></span>
-              <h2 class="h5 text-uppercase">Good Reviews</h2>
-              <p style="color: black">Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati reprehenderit explicabo quos fugit vitae dolorum.</p>
-            </div>
-          </div>
-
-        </div>
       </div>
-    </div>
+
+
+
+
+
+
+
+        <div class="row">
+
+
+
+          </div>
+
+
+
+
+
 
 
 
@@ -288,6 +273,7 @@
 
         </div>
 
+
         <div class="row">
 
         </div>
@@ -324,6 +310,7 @@
         </div>
       </div>
     </div>
+
 
 
     <footer class="site-footer" style="background-image: url('images/hero_1.jpg');">
@@ -381,6 +368,7 @@
         </div>
       </div>
       </div>
+
     </footer>
 
 

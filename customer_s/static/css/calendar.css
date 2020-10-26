@@ -8,11 +8,14 @@ header {
 
 #calendar {
     width: 100%;
+
 }
 
 #calendar a {
     color: #8e352e;
     text-decoration: none;
+
+
 }
 
 #calendar ul {
@@ -20,6 +23,7 @@ header {
     padding: 0;
     margin: 0;
     width: 100%;
+
 }
 
 #calendar li {
@@ -50,10 +54,12 @@ header {
 
 #calendar .days li {
     height: 180px;
+
 }
 
 #calendar .days li:hover {
     background: #d3d3d3;
+
 }
 
 #calendar .date {

@@ -5,14 +5,7 @@
 <link rel="stylesheet" href="{%static 'css/profile.css'%}">
 <body>
   <div class="main-content">
-    {% if messages %}
-    {%for message in messages%}
-        <div class="alert alert-{{message.tags}}">
-          {{message}}
-        </div>
 
-    {%endfor%}
-    {% endif %}
 
     <div class="card-body">
               <form method="post" enctype="multipart/form-data">
@@ -23,7 +16,7 @@
                         </fieldset>
                         <div class="form-group">
                           <button class="btn btn-primary btn-sm" type="submit">Send</button>
-                          <a href="/">Cancel</a>
+                          <a href="/" style="color: #FF7F50">Cancel</a>
                         </div>
 
 
