@@ -3,6 +3,8 @@
 {%load static%}
 {% load crispy_forms_tags %}
 {% block data %}
+
+{% if document %}
 <table class="table mb-0">
                     <thead>
                       <tr>
@@ -47,6 +49,11 @@
 
                     </tbody>
                   </table>
+                  {%endif%}
+
+                  {% if final_score %}
+                  <h1 style="margin-top: 20px; ">Your total ACFT score is <span style="color: #FF7F50">{{final_score}}</span></h1>
+                  {%endif%}
 
                 <hr class="my-4">
         {% endblock %}

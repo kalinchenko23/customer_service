@@ -34,14 +34,28 @@ class PdfListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = Document.objects.all()
         user = self.request.user
-
-
-
         queryset = queryset.filter(
                 created_by=user
             )
-
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(ListView, self).get_context_data(**kwargs)
+        user = self.request.user
+        event=ACFT.objects.all()
+        event=event.filter(owner=user)
+        for i in event:
+            pushups_score=y.pushups(i.pushups)
+            run_score=y.run(i.run)
+            deadlift_score=y.dead_lift(i.dead_lift)
+            sprint_drug_score=y.sdc(i.sprint_drag)
+            leg_tuck_score=y.leg_t(i.leg_tucks)
+            ball_score=y.ball(i.ball)
+            final=pushups_score+run_score+deadlift_score+sprint_drug_score+leg_tuck_score+ball_score
+        context['final_score'] = final
+
+        return context
+
 
 
 class PdfCreateView(LoginRequiredMixin, CreateView):
@@ -245,4 +259,3 @@ def resultsACFT(request):
     data=[{"pushups":pushups_score},{"ball":ball_score},{"sprint drag":sprint_drug_score},{"leg tucks":leg_tuck_score},
             {"run":run_score},{"dead lift":deadlift_score}]
     return JsonResponse(data, safe=False)
-

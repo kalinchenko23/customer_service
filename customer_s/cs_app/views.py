@@ -17,16 +17,18 @@ y=SawSomething()
 today=str(datetime.date.today())
 @login_required(login_url='/login')
 def home(request):
-    today_split=int(str(datetime.date.today()).split("-")[2])
+    today_split_day=int(str(datetime.date.today()).split("-")[2])
+    today_split_month=int(str(datetime.date.today()).split("-")[1])
     dat=Schedule.objects.all()
-    d=[(int(str(i.date).split("-")[2]),i.name) for i in dat]
+    d=[(int(str(i.date).split("-")[1]),int(str(i.date).split("-")[2]),i.name) for i in dat]
 
 
     event=""
 
     context={'days':x.get_current_month_days(),
             'uniform':uniform,
-            'today_split':today_split,
+            'today_split_month':today_split_month,
+            'today_split_day':today_split_day,
             'd':d,
             'today':today,
             'dat':dat,

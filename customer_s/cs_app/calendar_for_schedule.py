@@ -18,6 +18,5 @@ class Calendar():
         x=str(datetime.datetime.today()).split("-")
         current_month=calendar.month_name[int(x[1])]
         current_year=x[0]
-        return [current_month,current_year]
-x=Calendar()
-print(x.get_current_month_days())
+        month_number=int(x[1])
+        return [current_month,current_year,month_number]

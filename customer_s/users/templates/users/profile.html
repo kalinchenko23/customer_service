@@ -116,6 +116,7 @@
                 <div class="h5 mt-4">
                   <i class="ni business_briefcase-24 mr-2"></i>230th FMSU Customer Service
                 </div>
+
                 <div>
                   <i class="ni education_hat mr-2"></i>
 
@@ -166,6 +167,7 @@ var state ={
   }
 
   var dataURL = `/resultsdata`
+
   $.ajax({
     method:'GET',
     url:dataURL,
@@ -189,6 +191,9 @@ var state ={
   function buildChart(){
       var chartData = {
       "type":"bar",
+      "title": {
+        "text": "Your individual events"
+      },
       "scale-x":{
         "values":state.items
       },

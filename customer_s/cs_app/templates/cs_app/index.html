@@ -151,13 +151,15 @@
               <div class="date">{{i}}</div>
             {%endif%}
             {%for a in d%}
-            {%if a.0 == i%}
-              <div class="event-desc" style="color: black">{{a.1}}</div>
-              {%if today_split == i%}
-              <div class="event-desc" style="color: red">{{uniform}}</div>
-              {%endif%}
+            {%if a.1 == i and a.0 == month_and_year.2%}
+              <div class="event-desc" style="color: black">{{a.2}}</div>
               {%endif%}
               {%endfor%}
+              {%if today_split_day == i %}
+              <div class="event-desc" style="color: red">{{uniform}}</div>
+              {%endif%}
+
+
             </li>
             {%endfor%}
           </li>
