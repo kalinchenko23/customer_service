@@ -51,7 +51,7 @@ def saw_something(request):
                 'Please see a document attached.',
                 'kalinchenko.max@gmail.com',
                 ['kalinchenko.97@mail.ru'])
-            email.attach_file('/Users/maximkalinchenko/Desktop/customer_service/customer_s/media/issue/issue.pdf')
+            email.attach_file('/home/kalinchenkomax/customer_service/customer_s/media/issue/issue.pdf')
             email.send()
 
             messages.success(request, f"The issue was addressed.")

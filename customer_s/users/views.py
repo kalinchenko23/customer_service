@@ -135,6 +135,9 @@ class PdfUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        pk = form.instance.pk
+        pdf_delete = Document.objects.get(pk=pk)
+        pdf_delete.delete()
         return super().form_valid(form)
 
     def test_func(self):
@@ -171,7 +174,7 @@ def send_email_pdf(request,pk):
                 'Please see a document attached.',
                 'kalinchenko.max@gmail.com',
                 ['kalinchenko.97@mail.ru'])
-        email.attach_file('/Users/maximkalinchenko/Desktop/customer_service/customer_s'+pdf.url)
+        email.attach_file('/home/kalinchenkomax/customer_service/customer_s/'+pdf.url)
         email.send()
         return redirect("pdf-list")
     return render(request,"users/pdf_list.html")

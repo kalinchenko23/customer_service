@@ -1,12 +1,35 @@
 from django.db import models
 from django.contrib.auth.models import User
-from PIL import Image
+from PIL import Image, ExifTags
 from django.urls import reverse
 from django.dispatch import receiver
-
+import os
 
 
 # Create your models here.
+def rotate_image(filepath):
+  try:
+    image = Image.open(filepath)
+    for orientation in ExifTags.TAGS.keys():
+      if ExifTags.TAGS[orientation] == 'Orientation':
+            break
+    exif = dict(image._getexif().items())
+
+    if exif[orientation] == 3:
+        image = image.rotate(180, expand=True)
+    elif exif[orientation] == 6:
+        image = image.rotate(270, expand=True)
+    elif exif[orientation] == 8:
+        image = image.rotate(90, expand=True)
+    image.save(filepath)
+    image.close()
+  except (AttributeError, KeyError, IndexError):
+    # cases: image don't have getexif
+    pass
+
+
+
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -75,3 +98,11 @@ def delete_file_on_change_extension(sender, instance, **kwargs):
             new_img = instance.image
             if old_img and old_img.url != new_img.url:
                 old_img.delete(save=False)
+
+
+@receiver(models.signals.post_save, sender=Profile, dispatch_uid="update_image_profile")
+def update_image(sender, instance, **kwargs):
+  if instance.image:
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    fullpath = BASE_DIR + instance.image.url
+    rotate_image(fullpath)
